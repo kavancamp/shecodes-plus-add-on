@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.37/moment-timezone-with-data-1970-2030.js"></script>
+  </head>
+  <body>
+    <div class="date"></div>
+
+    <div id="local">local</div>
+    <br />
+    <label for="cities">Choose a city:</label>
+    <select id="cities">
+      <option value=""></option>
+      <option id="tokyo" value="Asia/Tokyo">Tokyo 🇯🇵</option>
+      <option id="paris" value="Europe/Paris">Paris 🇫🇷</option>
+      <option id="sydney" value="Austrailia/ydney">Sydney 🇦🇺</option>
+    </select>
+
+    <h2 id="display-selection"></h2>
+
+    <script>
+      /*function sayHello() {
+        let hellobox = document.querySelector(".hello");
+        hellobox.innerHTML = "Bonjour!";
+      }
+      setTimeout(sayHello, 10000);
+
+      OR
+
+      setTimeout(() => {
+        let hellobox = document.querySelector(".hello");
+        hellobox.innerHTML = "Bonjour!";
+      }, 1000);
+      */
+
+      function displayDate() {
+        let date = document.querySelector(".date");
+        date.innerHTML = new Date();
+      }
+
+      let localTimezone = moment.tz.guess();
+      let localElement = document.querySelector("#local");
+      localElement.innerHTML = `Your current time zone is ${localTimezone} and the current time is ${moment().format(
+        "h:m A"
+      )}`;
+      setInterval(displayDate, 1000);
+
+      function showDate(event) {
+        if (event.target.value.length > 0) {
+          let currentTime = moment()
+            .tz(event.target.value)
+            .format("dddd, MMMM D, YYYY h:mm A");
+
+          let element = document.querySelector("#display-selection");
+          element.innerHTML = `It is ${currentTime} in ${event.target.value}`;
+        }
+      }
+
+      let selectElement = document.querySelector("#cities");
+      selectElement.addEventListener("change", showDate);
+    </script>
+  </body>
+</html>
